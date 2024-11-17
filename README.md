@@ -25,5 +25,34 @@
 
 ### 3. Training scripts on UCF-101
 
+#### 1. Tokenization: CoordTok - step 1
+- We have N gpus
+- We need M gradent accumulation
+```bash
+torchrun --nnodes=1 --nproc_per_node=N train_coortok.py \
+    --data_root [DATAROOT] \
+    --num_views 256 \
+    --num_iters 1000001 --accum_iter M \
+    --enc_embed_dim 1024 --enc_num_layers 24 --enc_num_heads 16 --enc_patch_num_layers 8 \
+    --dec_embed_dim 1024 --dec_num_layers 24 --dec_num_heads 16 \
+    --point_per_vid 1024 \
+    --allow_tf32 \
+    --lpips_loss_scale 0.0
+```
+
+#### 2. Tokenization: CoordTok - step 2
+- For [CKPT], you must include "xx.ckpt"
+```bash
+torchrun --nnodes=1 --nproc_per_node=N train_coortok.py \
+    --data_root [DATAROOT] \
+    --num_views 256 \
+    --num_iters 1000001 --accum_iter M \
+    --enc_embed_dim 1024 --enc_num_layers 24 --enc_num_heads 16 --enc_patch_num_layers 8 \
+    --dec_embed_dim 1024 --dec_num_layers 24 --dec_num_heads 16 \
+    --point_per_vid 4096 \
+    --allow_tf32 \
+    --is_second_step --first_step_ckpt [CKPT] \
+    --lpips_loss_scale 1.0
+```
 
 ### 4. Evaluation scripts on UCF-101
