@@ -54,5 +54,16 @@ torchrun --nnodes=1 --nproc_per_node=N train_coortok.py \
     --is_second_step --first_step_ckpt [CKPT] \
     --lpips_loss_scale 1.0
 ```
+#### 3. Video generation: SiT
+- For [CKPT], you must include "xx.ckpt"
+```bash
+torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
+    --data_root [DATAROOT] \
+    --enc_embed_dim 1024 --enc_num_layers 24 --enc_num_heads 16 --enc_patch_num_layers 8 \
+    --dec_embed_dim 1024 --dec_num_layers 24 --dec_num_heads 16 \
+    --first_model_ckpt [CKPT] \
+    --model SiT-L/2 \
+    --global_batch_size 64
+```
 
 ### 4. Evaluation scripts on UCF-101
