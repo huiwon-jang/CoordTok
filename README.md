@@ -11,6 +11,8 @@
 </div>
 <h3 align="center">[<a href="https://huiwon-jang.github.io/coordtok/">project page</a>]</h3>
 
+<img width="100%" src="https://github.com/user-attachments/assets/ea11f54d-0cbe-4478-ac51-e596a7f924b8"/>
+
 
 ### 1. Environment setup
 
