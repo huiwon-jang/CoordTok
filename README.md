@@ -9,7 +9,7 @@
   <br>
   <sup>1</sup> KAIST &emsp; <sup>2</sup>UC Berkeley &emsp; <br>
 </div>
-<h3 align="center">[<a href="https://sites.google.com/view/2024coordtok">project page</a>]</h3>
+<h3 align="center">[<a href="https://huiwon-jang.github.io/coordtok/">project page</a>]</h3>
 
 
 ### 1. Environment setup
