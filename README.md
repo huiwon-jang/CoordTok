@@ -15,23 +15,52 @@
 
 
 ### 1. Environment setup
-
+```bash
+conda create -n coordtok python=3.9.19
+conda activate coordtok
+conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 pytorch-cuda=12.1 -c pytorch -c nvidia
+pip install timm einops decord imageio[ffmpeg] opencv-python scikit-image gdown configargparse wandb torchdiffeq
+```
 
 ### 2. Dataset
 
 #### Dataset download
-
+- We download UCF-101 on `[DATA_ROOT]` (e.g., `/data`)
+```bash
+cd [DATA_ROOT]
+wget https://www.crcv.ucf.edu/data/UCF101/UCF101.rar --no-check-certificate
+unrar x UCF101.rar
+```
 
 #### Dataset pre-processing
+- We use train set of UCF-101 for training CoordTok
+```bash
+cd CoordTok/data
+python split_ucf.py --data_root [DATAROOT] --data_name UCF-101
+```
 
+#### UCF-101
+```
+[DATA_ROOT]/UCF-101_train
+|-- class1
+    |-- video1.avi
+    |-- video2.avi
+    |-- ...
+|-- class2
+    |-- video1.avi
+    |-- video2.avi
+    |-- ...
+...
+```
 
 ### 3. Training scripts on UCF-101
+- We provide training scripts of CoordTok on UCF-101.
 
 #### 1. Tokenization: CoordTok - step 1
-- We have N gpus
-- We need M gradent accumulation
+- We have N gpus (e.g., `N=8`)
+- We need M gradent accumulation (e.g., `M=1` for A100x8)
 ```bash
-torchrun --nnodes=1 --nproc_per_node=N train_coortok.py \
+torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
     --data_root [DATAROOT] \
     --num_views 256 \
     --num_iters 1000001 --accum_iter M \
@@ -43,9 +72,9 @@ torchrun --nnodes=1 --nproc_per_node=N train_coortok.py \
 ```
 
 #### 2. Tokenization: CoordTok - step 2
-- For [CKPT], you must include "xx.ckpt"
+- For `[CKPT]`, you must include "xx.ckpt"
 ```bash
-torchrun --nnodes=1 --nproc_per_node=N train_coortok.py \
+torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
     --data_root [DATAROOT] \
     --num_views 256 \
     --num_iters 1000001 --accum_iter M \
@@ -56,8 +85,8 @@ torchrun --nnodes=1 --nproc_per_node=N train_coortok.py \
     --is_second_step --first_step_ckpt [CKPT] \
     --lpips_loss_scale 1.0
 ```
-#### 3. Video generation: SiT
-- For [CKPT], you must include "xx.ckpt"
+#### 3. Video generation: CoordTok-SiT-L/2
+- For `[CKPT]`, you must include "xx.ckpt"
 ```bash
 torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
     --data_root [DATAROOT] \
@@ -69,3 +98,8 @@ torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
 ```
 
 ### 4. Evaluation scripts on UCF-101
+
+
+
+### TODOs
+* [  ] Upload checkpoints trained on Kinetics600 + UCF-101
