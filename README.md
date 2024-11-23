@@ -102,4 +102,5 @@ torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
 
 
 ### TODOs
+* [  ] Add evaluation code and script of CoordTok and CoordTok-SiT-L/2
 * [  ] Upload checkpoints trained on Kinetics600 + UCF-101
