@@ -36,7 +36,7 @@ unrar x UCF101.rar
 - We use train set of UCF-101 for training CoordTok
 ```bash
 cd CoordTok/data
-python split_ucf.py --data_root [DATAROOT] --data_name UCF-101
+python split_ucf.py --data_root [DATA_ROOT] --data_name UCF-101
 ```
 
 #### UCF-101
@@ -61,7 +61,7 @@ python split_ucf.py --data_root [DATAROOT] --data_name UCF-101
 - We need M gradent accumulation (e.g., `M=1` for A100x8)
 ```bash
 torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
-    --data_root [DATAROOT] \
+    --data_root [DATA_ROOT] \
     --num_views 256 \
     --num_iters 1000001 --accum_iter M \
     --enc_embed_dim 1024 --enc_num_layers 24 --enc_num_heads 16 --enc_patch_num_layers 8 \
@@ -75,7 +75,7 @@ torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
 - For `[CKPT]`, you must include "xx.ckpt"
 ```bash
 torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
-    --data_root [DATAROOT] \
+    --data_root [DATA_ROOT] \
     --num_views 256 \
     --num_iters 1000001 --accum_iter M \
     --enc_embed_dim 1024 --enc_num_layers 24 --enc_num_heads 16 --enc_patch_num_layers 8 \
@@ -89,7 +89,7 @@ torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
 - For `[CKPT]`, you must include "xx.ckpt"
 ```bash
 torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
-    --data_root [DATAROOT] \
+    --data_root [DATA_ROOT] \
     --enc_embed_dim 1024 --enc_num_layers 24 --enc_num_heads 16 --enc_patch_num_layers 8 \
     --dec_embed_dim 1024 --dec_num_layers 24 --dec_num_heads 16 \
     --first_model_ckpt [CKPT] \
