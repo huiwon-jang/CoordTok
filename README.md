@@ -25,7 +25,7 @@ pip install timm einops decord imageio[ffmpeg] opencv-python scikit-image gdown 
 ### 2. Dataset
 
 #### Dataset download
-- We download UCF-101 on `[DATA_ROOT]` (e.g., `/data`)
+- We download UCF-101 on `[DATA_ROOT]` (e.g., `[DATA_ROOT]=/data`)
 ```bash
 cd [DATA_ROOT]
 wget https://www.crcv.ucf.edu/data/UCF101/UCF101.rar --no-check-certificate
