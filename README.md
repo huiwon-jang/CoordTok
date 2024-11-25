@@ -100,6 +100,7 @@ torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
 ### 4. Evaluation scripts on UCF-101
 #### 1. CoordTok video reconstruction
 ```python
+import torch
 from models.coordtok.coordtok_model import CoordTok
 from tools.utils_coordtok import decode_video
 
