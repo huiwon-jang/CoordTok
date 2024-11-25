@@ -141,7 +141,7 @@ x_recon = torch.clamp(x_recon, 0, 1) # Range [0, 1]
 ```
 
 #### 2. CoordTok-SiT-L/2
-- We provide script for generating a video from CoorTok-SiT-L/2.
+We provide script for generating a video from CoorTok-SiT-L/2.
 - [CKPT_CoordTok]: Checkpoint of CoordTok including "xx.ckpt".
 - [CKPT_SiT_PATH]: Checkpoint of SiT excluding "checkpoints/xx.pt"
 - [CKPT_SIT_ITER]: Number of iterations for inference (e.g., 600000)
