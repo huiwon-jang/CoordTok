@@ -25,7 +25,7 @@ pip install timm einops decord imageio[ffmpeg] opencv-python scikit-image gdown 
 ### 2. Dataset
 
 #### Dataset download
-- We download UCF-101 on `[DATA_ROOT]` (e.g., `[DATA_ROOT]=/data`)
+- We download UCF-101 dataset to `[DATA_ROOT]` (e.g., `[DATA_ROOT]=/data`).
 ```bash
 cd [DATA_ROOT]
 wget https://www.crcv.ucf.edu/data/UCF101/UCF101.rar --no-check-certificate
@@ -33,7 +33,7 @@ unrar x UCF101.rar
 ```
 
 #### Dataset pre-processing
-- We use train set of UCF-101 for training CoordTok
+- We use the training set of UCF-101 to train CoordTok.
 ```bash
 cd CoordTok/data
 python split_ucf.py --data_root [DATA_ROOT] --data_name UCF-101
@@ -57,8 +57,8 @@ python split_ucf.py --data_root [DATA_ROOT] --data_name UCF-101
 - We provide training scripts of CoordTok on UCF-101.
 
 #### 1. Tokenization: CoordTok - step 1
-- We have N gpus (e.g., `N=8`)
-- We need M gradent accumulation (e.g., `M=1` for A100x8)
+- We have N gpus (e.g., `N=8`).
+- We need M gradent accumulation (e.g., `M=1` for A100x8).
 ```bash
 torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
     --data_root [DATA_ROOT] \
@@ -72,7 +72,7 @@ torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
 ```
 
 #### 2. Tokenization: CoordTok - step 2
-- For `[CKPT]`, you must include "xx.ckpt"
+- For `[CKPT]`, you must include "xx.ckpt".
 ```bash
 torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
     --data_root [DATA_ROOT] \
@@ -86,7 +86,7 @@ torchrun --nnodes=1 --nproc_per_node=N train_coordtok.py \
     --lpips_loss_scale 1.0
 ```
 #### 3. Video generation: CoordTok-SiT-L/2
-- For `[CKPT]`, you must include "xx.ckpt"
+- For `[CKPT]`, you must include "xx.ckpt".
 ```bash
 torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
     --data_root [DATA_ROOT] \
@@ -143,8 +143,8 @@ x_recon = torch.clamp(x_recon, 0, 1) # Range [0, 1]
 #### 2. CoordTok-SiT-L/2
 We provide script for generating a video from CoorTok-SiT-L/2.
 - [CKPT_CoordTok]: Checkpoint of CoordTok including "xx.ckpt".
-- [CKPT_SiT_PATH]: Checkpoint of SiT excluding "checkpoints/xx.pt"
-- [CKPT_SIT_ITER]: Number of iterations for inference (e.g., 600000)
+- [CKPT_SiT_PATH]: Checkpoint of SiT excluding "checkpoints/xx.pt".
+- [CKPT_SIT_ITER]: Number of iterations for inference (e.g., 600000).
 ```bash
 python sample_sit.py SDE --sampling-method Euler \
     --data_root [DATA_ROOT] \
