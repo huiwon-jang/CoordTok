@@ -316,7 +316,7 @@ def main(args):
                 start_time = time()
 
             # Save SiT checkpoint:
-            if train_steps % args.ckpt_every == 0 and train_steps > 0:
+            if train_steps % args.ckpt_every == 0:
                 if rank == 0:
                     checkpoint = {
                         "model": model.module.state_dict(),

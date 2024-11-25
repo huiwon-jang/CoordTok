@@ -141,8 +141,20 @@ x_recon = torch.clamp(x_recon, 0, 1) # Range [0, 1]
 ```
 
 #### 2. CoordTok-SiT-L/2
--
+- We provide script for generating a video from CoorTok-SiT-L/2.
+- [CKPT_CoordTok]: Checkpoint of CoordTok including "xx.ckpt".
+- [CKPT_SiT_PATH]: Checkpoint of SiT excluding "checkpoints/xx.pt"
+- [CKPT_SIT_ITER]: Number of iterations for inference (e.g., 600000)
+```bash
+python sample_sit.py SDE --sampling-method Euler \
+    --data_root [DATA_ROOT] \
+    --first_model_ckpt [CKPT_CoordTok] \
+    --enc_embed_dim 1024 --enc_num_layers 24 --enc_num_heads 16 --enc_patch_num_layers 8 \
+    --dec_embed_dim 1024 --dec_num_layers 24 --dec_num_heads 16 \
+    --model SiT-L/2 \
+    --num-sampling-steps 250 \
+    --sit_ckpt_path [CKPT_SIT_PATH] --sit_ckpt_iter [CKPT_SIT_ITER]
+```
 
 ### TODOs
-* [  ] Add evaluation code and script of CoordTok and CoordTok-SiT-L/2
 * [  ] Upload checkpoints trained on Kinetics600 + UCF-101
