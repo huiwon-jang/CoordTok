@@ -54,7 +54,11 @@ def train(model, train_dataloader,
             for step, (first_frame_all, model_input_all, gt_all, n_frames_all) in enumerate(train_dataloader):
                 model.train()
                 vid, n_frames_all, model_input_all, gt_all = first_frame_all.to(device), n_frames_all.to(device), model_input_all.to(device), gt_all.to(device)
-
+                if dist.get_rank() == 0:
+                    breakpoint()
+                else:
+                    pass
+                dist.barrier()
                 with autocast():
                     train_loss = model(vid, model_input_all, gt_all, n_frames_all)
                 scaler.scale(train_loss).backward()

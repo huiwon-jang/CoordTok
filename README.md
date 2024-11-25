@@ -98,8 +98,49 @@ torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
 ```
 
 ### 4. Evaluation scripts on UCF-101
+#### 1. CoordTok video reconstruction
+```python
+from models.coordtok.coordtok_model import CoordTok
+from tools.utils_coordtok import decode_video
 
+model = CoordTok(video_shape=(128,128,128), # Shape (T, H, W)
+                 enc_embed_dim=1024,
+                 enc_num_layers=24,
+                 enc_num_heads=16,
+                 enc_patch_size_xy=16,
+                 enc_patch_size_t=8,
+                 enc_patch_type='transformer',
+                 enc_patch_num_layers=8,
+                 latent_resolution_xy=16,
+                 latent_resolution_t=8,
+                 latent_n_features=8,
+                 latent_patch_size_xy=8,
+                 latent_patch_size_t=16,
+                 dec_embed_dim=1024,
+                 dec_num_layers=24,
+                 dec_num_heads=16,
+                 dec_patch_size_xy=8,
+                 dec_patch_size_t=1,
+                 lpips_loss_scale=0).cuda()
 
+x = torch.zeros(1, 128, 128, 128, 3).cuda() # Shape (BS, T, H, W, 3) / Range [-1, 1]
+n_frames = torch.tensor([[128]], dtype=torch.int64).cuda() # Shape (BS, 1)
+
+z_xy, z_yt, z_xt = model.encode(x, n_frames) # triplane representation
+
+x_recon = decode_video(model,
+                       params=[z_xy, z_yt, z_xt],
+                       img_size=128,
+                       num_frames=128,
+                       patch_pred=(1, 8, 8), # Shape (dec_patch_size_t, dec_patch_size_xy, dec_patch_size_xy)
+                       max_num_frames=128,
+                       Nslice=1)             # Range [-1, 1]
+x_recon = (x_recon+1)/2
+x_recon = torch.clamp(x_recon, 0, 1) # Range [0, 1]
+```
+
+#### 2. CoordTok-SiT-L/2
+-
 
 ### TODOs
 * [  ] Add evaluation code and script of CoordTok and CoordTok-SiT-L/2

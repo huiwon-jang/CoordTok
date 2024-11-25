@@ -14,14 +14,19 @@ def cond_mkdir(path):
 
 
 @torch.no_grad()
-def render_video(model, params,
+def decode_video(model, params,
                  img_size, num_frames,
-                 patch_pred=(1, 8, 8), max_num_frames=128, point_per_vid=1024):
+                 patch_pred=(1, 8, 8), max_num_frames=128, point_per_vid=1024,
+                 Nslice=None):
+    # num_frames: frame length of the video to be decoded
+    # max_num_frames: maximum frame length of the video that coordtok is trained
+
     nframes = num_frames
     p_t, p_x, p_y = patch_pred
     n_patches = (img_size // p_x) * (img_size // p_y) * num_frames // p_t
 
-    Nslice = n_patches // point_per_vid
+    if Nslice == None:
+        Nslice = n_patches // point_per_vid
 
     patch_max = (max_num_frames // p_t, img_size // p_x, img_size // p_y)
     t_starts = torch.arange(0, num_frames - p_t + 1, p_t)
@@ -62,7 +67,7 @@ def coordtok_summary(vid_dataset, i3d, model,
     gt_vid_encode, num_frames = vid_dataset.__getitem__(chunk, fixed_sampling=True)
     n_frames = torch.tensor(num_frames).reshape(1, 1)
     params = model.encode((gt_vid_encode*2-1).cuda().unsqueeze(0), n_frames.cuda())
-    pred_vid = render_video(model, params,
+    pred_vid = decode_video(model, params,
                             img_size=img_size, num_frames=num_frames,
                             patch_pred=patch_pred,
                             max_num_frames=max_num_frames,
