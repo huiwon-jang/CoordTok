@@ -22,10 +22,13 @@ conda install pytorch==2.3.1 torchvision==0.18.1 torchaudio==2.3.1 pytorch-cuda=
 pip install timm einops decord imageio[ffmpeg] opencv-python scikit-image gdown configargparse wandb torchdiffeq
 ```
 
-### 2. Dataset
+### 2. Checkpoints
+We provide checkpoint of CoordTok and CoordTok-SiT-L/2 trained on UCF-101.
+
+### 3. Dataset
 
 #### Dataset download
-- We download UCF-101 dataset to `[DATA_ROOT]` (e.g., `[DATA_ROOT]=/data`).
+We download UCF-101 dataset to `[DATA_ROOT]` (e.g., `[DATA_ROOT]=/data`).
 ```bash
 cd [DATA_ROOT]
 wget https://www.crcv.ucf.edu/data/UCF101/UCF101.rar --no-check-certificate
@@ -33,7 +36,7 @@ unrar x UCF101.rar
 ```
 
 #### Dataset pre-processing
-- We use the training set of UCF-101 to train CoordTok.
+We use the training set of UCF-101 to train CoordTok.
 ```bash
 cd CoordTok/data
 python split_ucf.py --data_root [DATA_ROOT] --data_name UCF-101
@@ -53,8 +56,10 @@ python split_ucf.py --data_root [DATA_ROOT] --data_name UCF-101
 ...
 ```
 
-### 3. Training scripts on UCF-101
-- We provide training scripts of CoordTok on UCF-101.
+### 4. Training scripts on UCF-101
+We provide training scripts of CoordTok on UCF-101 in the below.
+- CoordTok (1M + 50K iters): [[link](https://drive.google.com/file/d/1beZNVwQeTvLU-23gCrvSCyKbEp4phBgw/view?usp=sharing)]
+- CoordTok-SiT-L/2 (600K iters): [[link](https://drive.google.com/file/d/1pT94aD0ujsLKPzIWncXFAWw52Me3uPaw/view?usp=sharing)]
 
 #### 1. Tokenization: CoordTok - step 1
 - We have N gpus (e.g., `N=8`).
@@ -97,7 +102,7 @@ torchrun --nnodes=1 --nproc_per_node=N train_sit.py \
     --global_batch_size 64
 ```
 
-### 4. Evaluation scripts on UCF-101
+### 5. Evaluation scripts on UCF-101
 #### 1. CoordTok video reconstruction
 ```python
 import torch
@@ -157,4 +162,7 @@ python sample_sit.py SDE --sampling-method Euler \
 ```
 
 ### TODOs
-* [  ] Upload checkpoints trained on Kinetics600 + UCF-101
+* [  ] Upload checkpoints trained on larger dataset
+
+### Note
+It's possible that this code may not accurately replicate the results outlined in the paper due to potential human errors during the preparation and cleaning of the code for release. If you encounter any difficulties in reproducing our findings, please don't hesitate to inform us. Additionally, we'll make an effort to carry out sanity-check experiments in the near future.
