@@ -23,7 +23,9 @@ pip install timm einops decord imageio[ffmpeg] opencv-python scikit-image gdown 
 ```
 
 ### 2. Checkpoints
-We provide checkpoint of CoordTok and CoordTok-SiT-L/2 trained on UCF-101.
+We provide checkpoint of CoordTok and CoordTok-SiT-L/2 trained on UCF-101 in the below:
+- CoordTok (1M + 50K iters): [[link](https://drive.google.com/file/d/1beZNVwQeTvLU-23gCrvSCyKbEp4phBgw/view?usp=sharing)]
+- CoordTok-SiT-L/2 (600K iters): [[link](https://drive.google.com/file/d/1pT94aD0ujsLKPzIWncXFAWw52Me3uPaw/view?usp=sharing)]
 
 ### 3. Dataset
 
@@ -58,8 +60,6 @@ python split_ucf.py --data_root [DATA_ROOT] --data_name UCF-101
 
 ### 4. Training scripts on UCF-101
 We provide training scripts of CoordTok on UCF-101 in the below.
-- CoordTok (1M + 50K iters): [[link](https://drive.google.com/file/d/1beZNVwQeTvLU-23gCrvSCyKbEp4phBgw/view?usp=sharing)]
-- CoordTok-SiT-L/2 (600K iters): [[link](https://drive.google.com/file/d/1pT94aD0ujsLKPzIWncXFAWw52Me3uPaw/view?usp=sharing)]
 
 #### 1. Tokenization: CoordTok - step 1
 - We have N gpus (e.g., `N=8`).
