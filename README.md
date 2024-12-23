@@ -24,8 +24,8 @@ pip install timm einops decord imageio[ffmpeg] opencv-python scikit-image gdown 
 
 ### 2. Checkpoints
 We provide checkpoints of CoordTok and CoordTok-SiT-L/2 trained on UCF-101 in the below. If the link is blocked, please contact me.
-- CoordTok: [[link](https://drive.google.com/file/d/1WKrtu5MX_YuyKjpFKoJFRi0zj1VADLs_/view?usp=sharing)]
-- CoordTok-SiT-L/2: [[link](https://drive.google.com/file/d/1DG-39RL1acPgnA2ucTJ5jF7J51b9MGTu/view?usp=sharing)]
+- CoordTok: [[link](https://huggingface.co/huiwon/CoordTok/blob/main/CoordTok_UCF101_1M_50K.pth)]
+- CoordTok-SiT-L/2: [[link](https://huggingface.co/huiwon/CoordTok/blob/main/sit/CoordTok_SiT_L_2_UCF101_600K.pt)]
 
 ### 3. Dataset
 
