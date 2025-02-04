@@ -71,7 +71,6 @@ class Encoder(nn.Module):
         """
         h = self.latent_resolution_xy // self.latent_patch_size_xy if is_xy else self.latent_resolution_t // self.latent_patch_size_t
         w = self.latent_resolution_xy // self.latent_patch_size_xy
-        h = w = int(x.shape[1]**.5)
         assert h * w == x.shape[1]
         p1 = self.latent_patch_size_xy if is_xy else self.latent_patch_size_t
         p2 = self.latent_patch_size_xy
